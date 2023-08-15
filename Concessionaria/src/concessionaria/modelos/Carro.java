@@ -2,28 +2,35 @@ package concessionaria.modelos;
 
 public class Carro extends Veiculo{
 
-    private int tipo;
-    private int rodas;
+    private int potenciaMotor;
+    private String tipoCombustivel;
 
-    public Carro(String modelo, String marca, int ano, String placa, String cor, float preco, int status, int tipo, int rodas) {
-        super(modelo, marca, ano, placa, cor, preco, status);
-        this.tipo = tipo;
-        this.rodas = rodas;
+    public Carro(String marca, String modelo, int ano, String cor, float preco, String placa, int potenciaMotor, String tipoCombustivel) {
+        super(marca, modelo, ano, cor, preco, placa);
+        this.potenciaMotor = potenciaMotor;
+        this.tipoCombustivel = tipoCombustivel;
     }
 
-    public int getTipo() {
-        return tipo;
+    public int getPotenciaMotor() {
+        return potenciaMotor;
     }
 
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
+    public void setPotenciaMotor(int potenciaMotor) {
+        this.potenciaMotor = potenciaMotor;
     }
 
-    public int getRodas() {
-        return rodas;
+    public String getTipoCombustivel() {
+        return tipoCombustivel;
     }
 
-    public void setRodas(int rodas) {
-        this.rodas = rodas;
+    public void setTipoCombustivel(String tipoCombustivel) {
+        this.tipoCombustivel = tipoCombustivel;
+    }
+
+    @Override
+    public void visualizar() {
+        super.visualizar();
+        System.out.println("Potencia do Motor: "+potenciaMotor);
+        System.out.println("Tipo de Combustivel: "+tipoCombustivel);
     }
 }

@@ -2,15 +2,15 @@ package concessionaria.conta;
 
 public abstract class Pessoa {
     private String nome;
-    private int idade;
-    private String nomeUsuario;
-    private String senha;
+    private String endereco;
+    private String telefone;
+    private String email;
 
-    public Pessoa(String nome, int idade, String nomeUsuario, String senha) {
+    public Pessoa(String nome, String endereco, String telefone, String email) {
         this.nome = nome;
-        this.idade = idade;
-        this.nomeUsuario = nomeUsuario;
-        this.senha = senha;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.email = email;
     }
 
     public String getNome() {
@@ -21,31 +21,37 @@ public abstract class Pessoa {
         this.nome = nome;
     }
 
-    public int getIdade() {
-        return idade;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setIdade(int idade) {
-        this.idade = idade;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
-    public String getNomeUsuario() {
-        return nomeUsuario;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getEmail() {
+        return email;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void visualizar(){
-        System.out.printf("\nDados do Usuario\n\tNome: %s\n\tIdade: %s\n\tNome de Usuario: %s\n\tSenha: %s\n", nome, idade, nomeUsuario, senha);
+        System.out.printf("\n*********************************************");
+        System.out.println("Dados do Usuario");
+        System.out.println("*********************************************");
+        System.out.println("Nome: "+nome);
+        System.out.println("Endereço: "+endereco);
+        System.out.println("Telefone: "+telefone);
+        System.out.println("Email: "+email);
     }
 }

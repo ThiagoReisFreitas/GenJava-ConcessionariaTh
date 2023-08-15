@@ -1,31 +1,22 @@
 package concessionaria.modelos;
 
-public abstract class Veiculo {
+public class Veiculo {
 
-    private String modelo;
     private String marca;
+    private String modelo;
     private int ano;
-    private String placa;
     private String cor;
     private float preco;
-    private int status; //1 - novo / 2 - usado
+    private String placa;
 
-    public Veiculo(String modelo, String marca, int ano, String placa, String cor, float preco, int status) {
-        this.modelo = modelo;
+
+    public Veiculo(String marca, String modelo, int ano, String cor, float preco, String placa) {
         this.marca = marca;
+        this.modelo = modelo;
         this.ano = ano;
-        this.placa = placa;
         this.cor = cor;
         this.preco = preco;
-        this.status = status;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
+        this.placa = placa;
     }
 
     public String getMarca() {
@@ -36,20 +27,20 @@ public abstract class Veiculo {
         this.marca = marca;
     }
 
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
     public int getAno() {
         return ano;
     }
 
     public void setAno(int ano) {
         this.ano = ano;
-    }
-
-    public String getPlaca() {
-        return placa;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
     }
 
     public String getCor() {
@@ -68,17 +59,16 @@ public abstract class Veiculo {
         this.preco = preco;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public void visualizar(){
-        System.out.printf(
-                "\nInformações do Carro\n\tMarca: %s\n\tModelo: %s\n\tAno: %d\n\tCor: %s\n\tPlaca: %s\n\tPreço: R$%.2f\n",
-                marca, modelo, ano, cor, placa, preco);
+
+        System.out.println("\n*********************************************");
+        System.out.println("Dados do Veiculo");
+        System.out.println("*********************************************");
+        System.out.println("Marca: "+this.marca);
+        System.out.println("Modelo: "+this.modelo);
+        System.out.println("Ano: "+this.ano);
+        System.out.println("Placa: "+this.placa);
+        System.out.println("Cor: "+this.cor);
+        System.out.println("Preço: "+this.preco);
     }
 }

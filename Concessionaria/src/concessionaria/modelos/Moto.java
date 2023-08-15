@@ -1,28 +1,26 @@
 package concessionaria.modelos;
 
 public class Moto extends Veiculo{
-    private int tipo;
-    private int rodas;
 
-    public Moto(String modelo, String marca, int ano, String placa, String cor, float preco, int status, int tipo, int rodas) {
-        super(modelo, marca, ano, placa, cor, preco, status);
-        this.tipo = tipo;
-        this.rodas = rodas;
+    private int cilindrada;
+
+    public Moto(String marca, String modelo, int ano, String cor, float preco, String placa, int cilindrada) {
+        super(marca, modelo, ano, cor, preco, placa);
+        this.cilindrada = cilindrada;
     }
 
-    public int getTipo() {
-        return tipo;
+    public int getCilindrada() {
+        return cilindrada;
     }
 
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
+    public void setCilindrada(int cilindrada) {
+        this.cilindrada = cilindrada;
     }
 
-    public int getRodas() {
-        return rodas;
-    }
 
-    public void setRodas(int rodas) {
-        this.rodas = rodas;
+    @Override
+    public void visualizar() {
+        super.visualizar();
+        System.out.println("Cilindradas: "+cilindrada);
     }
 }

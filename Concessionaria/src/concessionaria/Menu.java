@@ -3,13 +3,14 @@ package concessionaria;
 import concessionaria.modelos.Veiculo;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
 
     public static void main(String[] args){
         Scanner leia = new Scanner(System.in);
-        int op;
+        int op, status, tipo;
 
         while (true) {
             System.out.println("\n***************************************************");
@@ -27,8 +28,13 @@ public class Menu {
             System.out.println("                                                   ");
             System.out.println("***************************************************");
             System.out.print("Digite a opção desejada: ");
-
-            op = leia.nextInt();
+            try {
+                op = leia.nextInt();
+            }catch(InputMismatchException e){
+                System.out.println("\nDigite somente valores inteiros!");
+                leia.nextLine();
+                op = 9;
+            }
 
             if(op == 0){
                 System.out.println("< Concessionaria Th > - O Seu Carro Dos Sonhos Esta Aqui!");
@@ -37,7 +43,7 @@ public class Menu {
             }
             switch (op) {
                 case 1:
-                    System.out.println("\nAnunciar veiculo: ");
+                    System.out.println("Anunciar veiculo: ");
 
                     keyPress();
                     break;
@@ -58,10 +64,13 @@ public class Menu {
                     break;
                 case 5:
                     System.out.println("\nExcluir Anuncio");
-                default:
-                    System.out.println("\nOpção invalida...Tente novamente!");
+
                     keyPress();
                     break;
+                default:
+                    System.out.println("\nOpção invalida...Tente novamente!");
+
+                    keyPress();
             }
         }
     }
