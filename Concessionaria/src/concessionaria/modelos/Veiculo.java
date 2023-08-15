@@ -1,7 +1,11 @@
 package concessionaria.modelos;
 
-public class Veiculo {
+import java.text.NumberFormat;
 
+public abstract class Veiculo {
+
+    private int tipoVeiculo; //Carro(1) Moto(2)
+    private int numeroCadastro;
     private String marca;
     private String modelo;
     private int ano;
@@ -9,14 +13,33 @@ public class Veiculo {
     private float preco;
     private String placa;
 
-
-    public Veiculo(String marca, String modelo, int ano, String cor, float preco, String placa) {
+    public Veiculo(int tipoVeiculo, int numeroCadastro,String marca, String modelo, int ano, String cor, float preco, String placa) {
+        this.tipoVeiculo = tipoVeiculo;
+        this.numeroCadastro = numeroCadastro;
         this.marca = marca;
         this.modelo = modelo;
         this.ano = ano;
         this.cor = cor;
         this.preco = preco;
         this.placa = placa;
+    }
+
+    NumberFormat moeda = NumberFormat.getCurrencyInstance();
+
+    public int getTipoVeiculo() {
+        return tipoVeiculo;
+    }
+
+    public void setTipoVeiculo(int tipoVeiculo) {
+        this.tipoVeiculo = tipoVeiculo;
+    }
+
+    public int getNumeroCadastro() {
+        return numeroCadastro;
+    }
+
+    public void setNumeroCadastro(int numeroCadastro) {
+        this.numeroCadastro = numeroCadastro;
     }
 
     public String getMarca() {
@@ -59,16 +82,25 @@ public class Veiculo {
         this.preco = preco;
     }
 
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+
     public void visualizar(){
 
         System.out.println("\n*********************************************");
         System.out.println("Dados do Veiculo");
         System.out.println("*********************************************");
+        System.out.println("Número do Cadastro: "+this.numeroCadastro);
         System.out.println("Marca: "+this.marca);
         System.out.println("Modelo: "+this.modelo);
         System.out.println("Ano: "+this.ano);
         System.out.println("Placa: "+this.placa);
         System.out.println("Cor: "+this.cor);
-        System.out.println("Preço: "+this.preco);
+        System.out.println("Preço: "+moeda.format(this.preco));
     }
 }
