@@ -17,8 +17,11 @@ public class Menu {
         String marca, modelo, cor, placa, tipoCombustivel;
         int op, anoFinanciamento, ano, potenciaMotor, cilindrada, mostrar, numero;
         float preco, valor, diferenca;
-        //veiculoControlador.cadastrar(new Moto(2, veiculoControlador.gerarNumero(),"Honda", "Cross", 2010, "preto", 2000f,"ABD1232",600));
-        veiculoControlador.cadastrar(new Carro(1, veiculoControlador.gerarNumero(),"Honda", "Fit", 2010, "Azul", 30000, "TGD1A34", 239, "Flex"));
+        veiculoControlador.cadastrar(new Moto(2, veiculoControlador.gerarNumero(),"Honda", "Cross", 2010, "preto", 2000f,"ABD1232", false,600));
+        veiculoControlador.cadastrar(new Carro(1, veiculoControlador.gerarNumero(),"Honda", "Fit", 2010, "Azul", 30000, "TGD1A34", false,239, "Flex"));
+
+        veiculoControlador.cadastrar(new Moto(2, veiculoControlador.gerarNumero(),"Honda", "CB", 2010, "preto", 2000f,"ABD1232", true,600));
+        veiculoControlador.cadastrar(new Carro(1, veiculoControlador.gerarNumero(),"Chevrolet", "Blazer", 2010, "Azul", 30000, "TGD1A34", true,239, "Flex"));
 
         while (true) {
             System.out.println("\n*********************************************************************************************************");
@@ -46,6 +49,7 @@ public class Menu {
             }catch(InputMismatchException e){
                 System.out.println("\nDigite somente valores inteiros!");
                 leia.nextLine();
+
                 op = 9;
             }
 
@@ -106,12 +110,11 @@ public class Menu {
                     System.out.println("Digite o número do anuncio: ");
                     numero = leia.nextInt();
 
-                    veiculoControlador.deletar(numero, 1);
+                    veiculoControlador.deletar(numero);
                     keyPress();
                     break;
                 default:
                     System.out.println("\nOpção invalida...Tente novamente!");
-
                     keyPress();
             }
         }

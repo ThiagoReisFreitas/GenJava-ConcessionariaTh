@@ -8,6 +8,6 @@ public interface ConcessionariaRepositorio {
     public void procurarPorNumero(int numero);
     public  void listarTodas(int tipo);
     public void cadastrar(Veiculo veiculo);
-    public void deletar(int numero, int tipo);
+    public void deletar(int numero);
 
 }

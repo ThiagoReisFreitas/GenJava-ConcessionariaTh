@@ -13,7 +13,6 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
     Scanner leia = new Scanner(System.in);
     int numero = 0;
     ArrayList<Veiculo> listaVeiculo = new ArrayList<Veiculo>();
-    ArrayList<Veiculo> veiculosComprados = new ArrayList<Veiculo>();
 
     @Override
     public void procurarPorNumero(int numero) {
@@ -28,22 +27,28 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
 
     @Override
     public  void listarTodas(int tipo) {
+        int contador = 0;
        switch (tipo) {
            case 1:
-               if (listaVeiculo.isEmpty()) {
-                   System.out.println("Não Temos carros disponveis. Tente anunciar um!");
-               } else {
-                   for (var veiculo : listaVeiculo) {
+               for (var veiculo : listaVeiculo) {
+                   if(!veiculo.getComprado()) {
                        veiculo.visualizar();
+                       contador++;
                    }
                }
+               if(contador == 0)
+                   System.out.println("Não tempos nenhum veiculo a venda. Tente anunciar algum!");
+
+               break;
            case 2:
-               if (veiculosComprados.isEmpty()) {
-                   System.out.println("Nenhum veiculo foi comprado até agora!");
-               } else {
-                   for (var veiculo : veiculosComprados) {
+               for (var veiculo : listaVeiculo) {
+                   if(veiculo.getComprado()) {
                        veiculo.visualizar();
+                       contador++;
                    }
+               }
+               if (contador == 0) {
+                   System.out.println("Nenhum veiculo foi comprado até agora!");
                }
        }
     }
@@ -97,7 +102,7 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
                 System.out.println("Preço: ");
                 preco = leia.nextFloat();
 
-                cadastrar(new Carro(tipoVeiculo, gerarNumero(), marca, modelo, ano, cor, preco, placa, potenciaMotor, tipoCombustivel));
+                cadastrar(new Carro(tipoVeiculo, gerarNumero(), marca, modelo, ano, cor, preco, placa, false,potenciaMotor, tipoCombustivel));
             }
             case 2 -> {
                 System.out.println("Cilindrada: ");
@@ -107,27 +112,22 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
                 System.out.println("Preço: ");
                 preco = leia.nextFloat();
 
-                cadastrar(new Moto(tipoVeiculo, gerarNumero(), marca, modelo, ano, cor, preco, placa, cilindrada));
+                cadastrar(new Moto(tipoVeiculo, gerarNumero(), marca, modelo, ano, cor, preco, placa, false, cilindrada));
             }
         }
     }
 
     @Override
-    public void deletar(int numero, int tipo) { //1 é pra deletar, 2 é pra tirar da lista e adicionar na outra lista
+    public void deletar(int numero) { //1 é pra deletar, 2 é pra tirar da lista e adicionar na outra lista
         var veiculo = buscarColecao(numero);
 
-        switch(tipo) {
-            case 1:
-                if (veiculo != null) {
-                    if (listaVeiculo.remove(veiculo) == true)
-                        System.out.println("\nO Anuncio numero: " + numero + " foi deletado com sucesso!");
-                } else
-                    System.out.println("\nO Anuncio numero " + numero + " não foi encontrado!");
-                break;
-            case 2:
-                veiculosComprados.add(veiculo);
-                listaVeiculo.remove(veiculo);
-        }
+        if (veiculo != null) {
+            if (listaVeiculo.remove(veiculo))
+                System.out.println("\nO Anuncio numero: " + numero + " foi deletado com sucesso!");
+        } else
+            System.out.println("\nO Anuncio numero " + numero + " não foi encontrado!");
+
+
     }
 
     public int gerarNumero() {
@@ -145,12 +145,12 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
 
     public void listarCarroMoto(int tipoVeiculo, int tipo) {//tipo 1 é a função para a listaVeiculos e 2 para veiculosComprados
         int contador = 0;
-        switch (tipo){
+        switch (tipo) {
             case 1:
-                switch (tipoVeiculo){
+                switch (tipoVeiculo) {
                     case 1 -> {
                         for (var carro : listaVeiculo) {
-                            if (carro.getTipoVeiculo() == 1) {
+                            if (carro.getTipoVeiculo() == 1 && !carro.getComprado()) {
                                 carro.visualizar();
                                 contador += 1;
                             }
@@ -162,7 +162,7 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
                     case 2 -> {
 
                         for (var moto : listaVeiculo) {
-                            if (moto.getTipoVeiculo() == 2) {
+                            if (moto.getTipoVeiculo() == 2 && !moto.getComprado()) {
                                 moto.visualizar();
                                 contador += 1;
                             }
@@ -173,30 +173,29 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
                 }
                 break;
             case 2:
-                switch (tipoVeiculo){
-                    case 1 -> {
-                        for (var carro : veiculosComprados) {
-                            if (carro.getTipoVeiculo() == 1) {
+                switch (tipoVeiculo) {
+                    case 1 ->{
+                        for(var carro : listaVeiculo) {
+                            if(carro.getTipoVeiculo() == 1 && carro.getComprado()){
                                 carro.visualizar();
-                                contador += 1;
+                                contador++;
                             }
                         }
-                        if (contador == 0)
-                            System.out.println("Nenhum carro foi comprado até agora!");
+                        if(contador == 0)
+                            System.out.println("Nenhum carro foi comprado!");
                     }
-                    case 2 -> {
-
-                        for (var moto : veiculosComprados) {
-                            if (moto.getTipoVeiculo() == 2) {
+                    case 2 ->{
+                        for(var moto : listaVeiculo) {
+                            if(moto.getTipoVeiculo() == 2 && moto.getComprado()){
                                 moto.visualizar();
-                                contador += 1;
+                                contador++;
                             }
                         }
-                        if (contador == 0)
-                            System.out.println("Nenhuma moto foi comprada até agora!");
+                        if(contador == 0){
+                            System.out.println("Nenhuma moto foi comprada!");
+                        }
                     }
                 }
-
         }
     }
 
@@ -209,7 +208,6 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
 
     public void pagamentoAVista(Veiculo veiculo){
         float valor;
-
         System.out.println("\nÀ vista: ");
         System.out.println("O Veiculo custa "+veiculo.getPrecoFormatado()+": ");
         do{
@@ -222,7 +220,8 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
         }while (valor != veiculo.getPreco());
         System.out.println("Pagamento realizado com sucesso!");
         System.out.println("Você é o mais novo proprietario do/a "+veiculo.getMarca()+" "+veiculo.getModelo()+", Parabens!");
-        deletar(veiculo.getNumeroCadastro(), 2);
+        veiculo.setComprado(true);
+
     }
 
     public void pagamentoAVista(Veiculo veiculo, float diferenca){     //sobrecarga para forçar um parametro opcional
@@ -239,7 +238,7 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
         }while (valor != diferenca);
         System.out.println("Pagamento realizado com sucesso!");
         System.out.println("Você é o mais novo proprietario do/a "+veiculo.getMarca()+" "+veiculo.getModelo()+", Parabens!");
-        deletar(veiculo.getNumeroCadastro(), 2);
+        veiculo.setComprado(true);
     }
 
     public void pagamentoFinanciamento(Veiculo veiculo){
@@ -259,7 +258,7 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
             parcela = preco / meses;
         }
         System.out.println("Você é o mais novo proprietario do/a "+veiculo.getMarca()+" "+veiculo.getModelo()+", Parabens!");
-        deletar(veiculo.getNumeroCadastro(), 2);
+        veiculo.setComprado(true);
     }
 
     public void pagamentoFinanciamento(Veiculo veiculo, float diferenca){
@@ -278,7 +277,7 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
             parcela = preco / meses;
         }
         System.out.println("Você é o mais novo proprietario do/a "+veiculo.getMarca()+" "+veiculo.getModelo()+", Parabens!");
-        deletar(veiculo.getNumeroCadastro(), 2);
+        veiculo.setComprado(true);
     }
 
     public void pagamentoTroca(Veiculo veiculo){
@@ -287,7 +286,7 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
         System.out.println("Troca: ");
         System.out.println("Você quer trocar qual carro pelo "+veiculo.getMarca()+" "+veiculo.getModelo()+"? ");
         criacaoCadastro(2);
-        var troca = buscarColecao(tamanhoLista());
+        var troca = buscarColecao(listaVeiculo.size());
         if(veiculo.getPreco() > troca.getPreco()){
             diferenca = veiculo.getPreco() - troca.getPreco();
             System.out.println("A diferença é de "+diferenca+", qual vai ser a forma de pagamento dela, À Vista(1) ou Financiamento(2)?");
@@ -304,10 +303,7 @@ public class VeiculoControlador implements ConcessionariaRepositorio {
         else{
             System.out.println("O valor dos veiculos são iguais a troca foi realizada com sucesso!");
         }
-        deletar(veiculo.getNumeroCadastro(), 2);
-    }
-    public int tamanhoLista() {
-        return listaVeiculo.size();
+        veiculo.setComprado(true);
     }
 
 }

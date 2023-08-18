@@ -12,8 +12,9 @@ public abstract class Veiculo {
     private String cor;
     private float preco;
     private String placa;
+    private boolean comprado;
 
-    public Veiculo(int tipoVeiculo, int numeroCadastro,String marca, String modelo, int ano, String cor, float preco, String placa) {
+    public Veiculo(int tipoVeiculo, int numeroCadastro,String marca, String modelo, int ano, String cor, float preco, String placa, boolean comprado) {
         this.tipoVeiculo = tipoVeiculo;
         this.numeroCadastro = numeroCadastro;
         this.marca = marca;
@@ -22,6 +23,7 @@ public abstract class Veiculo {
         this.cor = cor;
         this.preco = preco;
         this.placa = placa;
+        this.comprado = comprado;
     }
 
     NumberFormat moeda = NumberFormat.getCurrencyInstance();
@@ -92,6 +94,14 @@ public abstract class Veiculo {
 
     public void setPlaca(String placa) {
         this.placa = placa;
+    }
+
+    public boolean getComprado() {
+        return comprado;
+    }
+
+    public void setComprado(boolean comprado) {
+        this.comprado = comprado;
     }
 
     public void visualizar(){
