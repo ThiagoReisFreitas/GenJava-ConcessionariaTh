@@ -78,6 +78,10 @@ public abstract class Veiculo {
         return preco;
     }
 
+    public String getPrecoFormatado() {
+        return moeda.format(preco);
+    }
+
     public void setPreco(float preco) {
         this.preco = preco;
     }
@@ -93,7 +97,10 @@ public abstract class Veiculo {
     public void visualizar(){
 
         System.out.println("\n*********************************************");
-        System.out.println("Dados do Veiculo");
+        if(this.tipoVeiculo == 1)
+            System.out.println("Dados do Carro");
+        else
+            System.out.println("Dados da Moto");
         System.out.println("*********************************************");
         System.out.println("Número do Cadastro: "+this.numeroCadastro);
         System.out.println("Marca: "+this.marca);

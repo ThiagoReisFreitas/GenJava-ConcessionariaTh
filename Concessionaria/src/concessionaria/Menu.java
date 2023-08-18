@@ -15,15 +15,13 @@ public class Menu {
         VeiculoControlador veiculoControlador = new VeiculoControlador();
 
         String marca, modelo, cor, placa, tipoCombustivel;
-        int op, tipoVeiculo, ano, potenciaMotor, cilindrada, mostrar, numero;
-        float preco;
-        veiculoControlador.cadastrar(new Moto(2, veiculoControlador.gerarNumero(),"Honda", "Cross", 2010, "preto", 2000f,"ABD1232",600));
+        int op, anoFinanciamento, ano, potenciaMotor, cilindrada, mostrar, numero;
+        float preco, valor, diferenca;
+        //veiculoControlador.cadastrar(new Moto(2, veiculoControlador.gerarNumero(),"Honda", "Cross", 2010, "preto", 2000f,"ABD1232",600));
         veiculoControlador.cadastrar(new Carro(1, veiculoControlador.gerarNumero(),"Honda", "Fit", 2010, "Azul", 30000, "TGD1A34", 239, "Flex"));
-        veiculoControlador.listarTodas();
-
 
         while (true) {
-            System.out.println("\n*****************************************************************************************************************");
+            System.out.println("\n*********************************************************************************************************");
             System.out.println("");
             System.out.println("  _____                                      _                             _          _______  _");
             System.out.println(" / ____|                                    (_)                           (_)        |__   __|| |");
@@ -32,7 +30,7 @@ public class Menu {
             System.out.println("| |____ | (_) || | | || (__ |  __/\\__ \\\\__ \\| || (_) || | | || (_| || |   | || (_| |    | |   | | | |");
             System.out.println(" \\_____| \\___/ |_| |_| \\___| \\___||___/|___/|_| \\___/ |_| |_| \\__,_||_|   |_| \\__,_|    |_|   |_| |_|");
             System.out.println("");
-            System.out.println("******************************************************************************************************************");
+            System.out.println("**********************************************************************************************************");
             System.out.println("                                                   ");
             System.out.println("                                1 - Anunciar Veiculo                   ");
             System.out.println("                                2 - Comprar Veiculo                    ");
@@ -41,7 +39,7 @@ public class Menu {
             System.out.println("                                5 - Excluir anuncio                    ");
             System.out.println("                                0 - Sair                               ");
             System.out.println("                                                   ");
-            System.out.println("*******************************************************************************************************************");
+            System.out.println("***********************************************************************************************************");
             System.out.print("Digite a opção desejada: ");
             try {
                 op = leia.nextInt();
@@ -58,57 +56,33 @@ public class Menu {
             }
             switch (op) {
                 case 1:
-                    System.out.println("\nAnunciar veiculo: ");
-                    System.out.println("Você quer anunciar um Carro(1) ou uma Moto(2): ");
-                    tipoVeiculo = leia.nextInt();
-                    leia.nextLine();
-
-                    System.out.println("Marca: ");
-                    marca = leia.nextLine();
-
-                    System.out.println("Modelo: ");
-                    modelo = leia.nextLine();
-
-                    System.out.println("Cor: ");
-                    cor = leia.nextLine();
-
-                    System.out.println("Placa: ");
-                    placa = leia.nextLine();
-
-                    System.out.println("Ano: ");
-                    ano = leia.nextInt();
-
-                    switch (tipoVeiculo){
-                        case 1 -> {
-                            System.out.println("Potencia do Motor: ");
-                            potenciaMotor = leia.nextInt();
-                            leia.nextLine();
-
-                            System.out.println("Tipo de Combustivel: ");
-                            tipoCombustivel = leia.nextLine();
-
-                            System.out.println("Preço: ");
-                            preco = leia.nextFloat();
-
-                            veiculoControlador.cadastrar(new Carro(tipoVeiculo, veiculoControlador.gerarNumero(), marca, modelo, ano, cor, preco, placa, potenciaMotor, tipoCombustivel));
-                        }
-                        case 2 -> {
-                            System.out.println("Cilindrada: ");
-                            cilindrada = leia.nextInt();
-                            leia.nextLine();
-
-                            System.out.println("Preço: ");
-                            preco = leia.nextFloat();
-
-                            veiculoControlador.cadastrar(new Moto(tipoVeiculo, veiculoControlador.gerarNumero(), marca, modelo, ano, cor, preco, placa, cilindrada));
-                        }
-                    }
-
-
+                    veiculoControlador.criacaoCadastro(1);
                     keyPress();
                     break;
                 case 2:
                     System.out.println("\nComprar Veiculo: ");
+                    System.out.println("Qual veiculo você quer comprar? ");
+                    numero = leia.nextInt();
+                    var veiculo = veiculoControlador.buscarColecao(numero);
+                    if (veiculo != null)
+                        veiculo.visualizar();
+                    else {
+                        System.out.println("Veiculo não foi encontrado!");
+                        break;
+                    }
+                    System.out.println("\nQual a forma de pagamento: Á Vista(1), Financiamento(2) ou Troca(3) ");
+                    mostrar = leia.nextInt();
+                    switch(mostrar) {
+                        case 1:
+                            veiculoControlador.pagamentoAVista(veiculo);
+                            break;
+                        case 2:
+                            veiculoControlador.pagamentoFinanciamento(veiculo);
+                            break;
+                        case 3:
+                            veiculoControlador.pagamentoTroca(veiculo);
+                            break;
+                    }
 
                     keyPress();
                     break;
@@ -116,16 +90,15 @@ public class Menu {
                     System.out.println("\nLista dos Veiculos Disponiveis:");
                     System.out.println("Mostrar Somente Carros(1), Motos(2) ou Todos os Veiculos(3)? ");
                     mostrar = leia.nextInt();
-                        if(mostrar < 3)
-                            veiculoControlador.listarCarroMoto(mostrar);
-                        else
-                            veiculoControlador.listarTodas();
+                    veiculoControlador.escolherVisualizar(mostrar, 1);
 
                     keyPress();
                     break;
                 case 4:
                     System.out.println("\nLista dos Veiculos Comprados:");
-
+                    System.out.println("Mostrar Somente Carros(1), Motos(2) ou Todos os Veiculos(3)? ");
+                    mostrar = leia.nextInt();
+                    veiculoControlador.escolherVisualizar(mostrar, 2);
                     keyPress();
                     break;
                 case 5:
@@ -133,7 +106,7 @@ public class Menu {
                     System.out.println("Digite o número do anuncio: ");
                     numero = leia.nextInt();
 
-                    veiculoControlador.deletar(numero);
+                    veiculoControlador.deletar(numero, 1);
                     keyPress();
                     break;
                 default:

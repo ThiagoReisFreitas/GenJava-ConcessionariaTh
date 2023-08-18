@@ -4,9 +4,10 @@ import concessionaria.modelos.Veiculo;
 
 public interface ConcessionariaRepositorio {
 
+    //CRUD
     public void procurarPorNumero(int numero);
-    public  void listarTodas();
+    public  void listarTodas(int tipo);
     public void cadastrar(Veiculo veiculo);
-    public void atualizar(Veiculo veiculo);
-    public void deletar(int numero);
+    public void deletar(int numero, int tipo);
+
 }
